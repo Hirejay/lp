@@ -1,0 +1,192 @@
+#include<iostream>
+using namespace std;
+
+void sortbyratio(float p[],float w[],float f[],int n){
+
+    for(int i=0;i<n;i++){
+
+        for(int j=0;j<n-1;j++){
+            if(f[j]<f[j+1]){
+
+                float temp1=f[j+1];
+                f[j+1]=f[j];
+                f[j]=temp1;
+
+                float temp2=p[j+1];
+                p[j+1]=p[j];
+                p[j]=temp2;
+
+                float temp3=w[j+1];
+                w[j+1]=w[j];
+                w[j]=temp3;
+
+            }
+
+        }
+
+    }
+
+}
+void sortbyprofit(float p[],float w[],float f[],int n){
+
+    for(int i=0;i<n;i++){
+
+        for(int j=0;j<n-1;j++){
+            if(p[j]<p[j+1]){
+
+                float temp1=f[j+1];
+                f[j+1]=f[j];
+                f[j]=temp1;
+
+                float temp2=p[j+1];
+                p[j+1]=p[j];
+                p[j]=temp2;
+
+                float temp3=w[j+1];
+                w[j+1]=w[j];
+                w[j]=temp3;
+
+            }
+
+        }
+
+    }
+
+}
+void sortbyweight(float p[],float w[],float f[],int n){
+
+    for(int i=0;i<n;i++){
+
+        for(int j=0;j<n-1;j++){
+            if(w[j]>w[j+1]){
+
+                float temp1=f[j+1];
+                f[j+1]=f[j];
+                f[j]=temp1;
+
+                float temp2=p[j+1];
+                p[j+1]=p[j];
+                p[j]=temp2;
+
+                float temp3=w[j+1];
+                w[j+1]=w[j];
+                w[j]=temp3;
+
+            }
+
+        }
+
+    }
+
+}
+
+void ratio(float p[],float w[],float f[], int n,int c,int choice){
+
+    int wt=c;
+    float profit=0;
+
+    if(choice==1){
+        sortbyprofit(p,w,f,n);
+
+    }
+    if(choice ==2){
+        sortbyweight(p,w,f,n);
+
+    }
+    if(choice== 3){
+        sortbyratio(p,w,f,n);
+
+    }
+
+
+    
+
+    for(int i=0;i<n;i++){
+
+        if(wt>0){
+
+            if(wt>=w[i]){
+                profit+=p[i];
+                wt-=w[i];
+
+            }else{
+                profit+=(p[i]*wt/w[i]);
+                wt=0;
+
+            }
+
+        }
+
+    }
+
+    cout<<"Maximum profit is : "<<profit;
+
+}
+
+int main(){
+    int n,c;
+
+    cout<<"\nEnter the number of items : ";
+    cin>>n;
+
+    float p[n],w[n],f[n];
+
+    for(int i=0;i<n;i++){
+        cout<<"\nEnter the profit and weight for item "<<i+1<<" : ";
+        cin>>p[i];
+        cin>>w[i];
+
+        f[i]=p[i]/w[i];
+
+    }
+
+    cout<<"\nEnter the knapsack capicity : ";
+    cin>>c;
+
+
+    do{
+        int ch;
+
+        cout<<"\n\n1.Maximum Profit\n2.Minimum weight\n3.Maximum Profit/weight\n4.exit\nEnter your choice : ";
+        cin>>ch;
+
+        switch(ch){
+            case 1:
+            
+            ratio(p,w,f,n,c,ch);
+            break;
+
+
+            case 2:
+
+            ratio(p,w,f,n,c,ch);
+            break;
+
+
+            case 3:
+
+
+            ratio(p,w,f,n,c,ch);
+            break;
+
+            case 4:
+            
+            exit(0);
+            break;
+
+            default:
+
+            cout<<"\nEnter the valid choice ";
+            break;
+
+
+
+        }
+
+
+    }while(true);
+
+    
+
+
+}

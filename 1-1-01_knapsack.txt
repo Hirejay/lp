@@ -1,0 +1,89 @@
+#include<iostream>
+using namespace std;
+
+int max(int x,int y){
+    return (x>y)? x:y;
+
+}
+
+void knapsack(int k_capicity,int p[],int w[],int n){
+    int a[n+1][k_capicity+1];
+
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=k_capicity;j++){
+            if(i==0 ||j==0){
+                a[i][j]=0;
+
+            }else if(w[i-1]<=j){
+                a[i][j]=max(a[i-1][j], p[i-1]+a[i-1][j-w[i-1]]);
+
+            }else{
+                a[i][j]=a[i-1][j];
+            }
+
+        }
+
+
+    }
+    cout<<endl;
+
+    cout<<"matrix for 0/1 knapsack"<<endl;
+    for(int i=0;i<=n;i++){
+
+        for(int j=0;j<=k_capicity;j++){
+            cout<<a[i][j]<<" ";
+
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+
+    int profit =a[n][k_capicity];
+    int wt=k_capicity;
+
+    for(int i=n;i>0 && profit >0;i--){
+        if(profit==a[i-1][k_capicity]){
+            cout<<"this is not included "<<i<<" ->0"<<endl;
+
+        }
+        else{
+            cout<<"this is included "<<i<<" ->1"<<endl;
+            profit-=p[i-1];
+            wt-=w[i-1];
+        }
+
+    }
+    cout<<endl;
+
+    cout<<"maximun profit for 0/1 knapsack is : "<<a[n][k_capicity]<<endl;
+
+    cout<<endl;
+
+
+}
+
+int main(){
+    int n,k_capicity;
+    cout<<"enter the number of item: ";
+    cin>>n;
+
+    int p[n],w[n];
+    for(int i=0;i<n;i++){
+        cout<<"enter the profit and weight for space "<<i<<" ";
+        cin>>p[i];
+        cin>>w[i];
+
+
+    }
+
+    cout<<"enter the capicity of knapsack : ";
+    cin>>k_capicity;
+
+
+    knapsack(k_capicity,p,w,n);
+
+
+
+
+
+}

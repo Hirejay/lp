@@ -1,0 +1,90 @@
+#include<iostream>
+#include<climits>
+using namespace std;
+
+void bellmanford(int edges[][3],int V, int E,int start){
+    int dist[V];
+    for(int i=0;i<V;i++){
+        dist[i]=INT_MAX;
+    
+    }
+
+    dist[start]=0;
+
+    for(int i=1;i<V;i++){
+        for(int j=0;j<E;j++){
+            
+            int u=edges[j][0];
+            int v=edges[j][1];
+            int w=edges[j][2];
+
+            if(dist[u]!=INT_MAX && dist[u]+ w <dist[v]){
+                dist[v]=dist[u]+w;
+                
+            }
+        }
+    }
+
+    for(int i=0;i<E;i++){
+         
+         int u=edges[i][0];
+         int v=edges[i][1];
+         int w=edges[i][2];
+
+        if(dist[u]!=INT_MAX && dist[u]+w<dist[v]){
+            cout<<"\nGraph contain negative cycle ";
+            return;
+
+        }
+
+    }
+    cout<<"Vertex\t\tDistination from source\n";
+
+    for(int i=0;i<V;i++){
+        cout<<"\n"<<i<<"\t\t"<<((dist[i]==INT_MAX)? "INF":to_string(dist[i]));
+
+
+    }
+
+}
+int main(){
+
+    int V,E,start;
+
+    cout<<"\nEnter the number of vertex : ";
+    cin>>V;
+
+    cout<<"\nEnter the number of edges : ";
+    cin>>E;
+
+    int edges[E][3];
+
+    for(int i=0;i<E;i++){
+        cout<<"\nEnter the source : ";
+        cin>>edges[i][0];
+        cout<<"\nEnter the destination : ";
+        cin>>edges[i][1];
+        cout<<"\nEnter the weight : ";
+        cin>>edges[i][2];
+    }
+
+
+    do{
+        
+        cout<<"\nEnter the starting source : ";
+        cin>>start;
+
+        bellmanford(edges,V,E,start);
+
+    }while(true);
+
+   
+
+
+
+    
+
+
+
+    return 0;
+}
